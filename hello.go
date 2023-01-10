@@ -22,23 +22,17 @@ var records = []record{
 	{ID: "5", Name: "hoalaa", Val: 3.31},
 }
 
-// program
-func main() {
-	// := -> short declaration form
-	// infer the type object declared
-	router := gin.Default()
+//setupRouter
+func setupRouter() *gin.Engine {
 
+	router := gin.Default()
 	// function: GET RECORDS
 	router.GET("/records", getRecords)
-
 	// function: POST RECORD
 	router.POST("/records", postRecord)
-
 	// function: GET RECORD BY ID
 	router.GET("/records/:id", getRecordByID)
-
-	// TODO: create test cases for gin app
-	router.Run("localhost:8000")
+	return router
 }
 
 // handler GET RECORDS: responds w/ list of records as JSON
@@ -72,4 +66,9 @@ func getRecordByID(c *gin.Context) {
 			return
 		}
 	}
+}
+
+func main() {
+	r := setupRouter()
+	r.Run(":8080")
 }
