@@ -36,13 +36,13 @@ go test
 
 ## Key operations
 * Get go version
-    ```bash
+    ```go
     go version 
     ```
 * Get go modules versions
-    ```bash
+    ```go
     go list -m all
     
-    # looking for specific module?
+    // looking for specific module?
     go list -m all | egrep "gin"
     ```
