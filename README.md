@@ -1,34 +1,40 @@
 
-Based on: https://go.dev/doc/tutorial/web-service-gin
+# GOLANG (GIN) DEMO API
+This is a golang app to show gin framework development & testing.
+- Author: [**Cristian Pardo**](http://cristianpardodeveloper.net) (cristianpardoluna@gmail.com)
+- Based on: https://go.dev/doc/tutorial/web-service-gin
 
 built with:
 * go v1.18.1
     * gin v1.8.2
 
-# Start
+## Start
 Start the development server with:
 ```bash
 . start.sh
 ```
 
-# Run tests
+## Run tests
 Run the available tests:
+```go
+go test 
+```
 
-# API
+## API
 1. get records:
     ```bash
-    curl 
+    curl 127.0.0.1:8080/records
     ```
 2. post record
     ```bash
-    curl 
+    curl -X POST 127.0.0.1:8080/records -d '{"id": RECORD_ID, "name": RECORD_NAME, "val": RECORD_VALUE}'
     ```
 3. get record by ID
     ```bash
-    curl 
+    curl 127.0.0.1:8080/RECORD_ID
     ```
 
-# Key operations
+## Key operations
 * Get go version
     ```bash
     go version 

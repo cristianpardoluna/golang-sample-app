@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -10,9 +11,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGoRecords(t *testing.T) {
-	router := setupRouter()
-	w := httptest.NewRecorder()
+var router = setupRouter()
+var w = httptest.NewRecorder()
+
+func TestGetRecords(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/records", nil)
 	router.ServeHTTP(w, req)
 
@@ -28,6 +30,41 @@ func TestGoRecords(t *testing.T) {
 		fmt.Println(err)
 	}
 	assert.IsTypef(t, arr, bodyParsed,
+		"Error message %s", "formatted")
+
+}
+
+func TestGetRecordByID(t *testing.T) {
+	recordID := 1
+	req, _ := http.NewRequest("GET",
+		fmt.Sprintf("/records/%v", recordID), nil)
+	router.ServeHTTP(w, req)
+
+	// assert if status code is 200
+	assert.Equalf(t, 200, w.Code,
+		"Error message %s", "formatted")
+
+}
+
+func TestPostRecord(t *testing.T) {
+	type Record struct {
+		id   string
+		name string
+		val  float64
+	}
+	newRecord := Record{id: "666",
+		name: "test record", val: 0.6}
+
+	jsonData, err := json.Marshal(newRecord)
+	if err != nil {
+		fmt.Printf("Json error: %v", err)
+	}
+	req, _ := http.NewRequest("POST", "/records",
+		bytes.NewBuffer(jsonData))
+	router.ServeHTTP(w, req)
+
+	// assert if status code is 200
+	assert.Equalf(t, 200, w.Code,
 		"Error message %s", "formatted")
 
 }
